@@ -1,0 +1,297 @@
+[
+    {
+        "id": "15c20ee25c8f2ad8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a1793c1f7501cf7c",
+        "type": "mqtt in",
+        "z": "15c20ee25c8f2ad8",
+        "name": "TEMPERATURE",
+        "topic": "#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "c52b26a844a812e8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 120,
+        "y": 140,
+        "wires": [
+            [
+                "e3aa53aa846fb788"
+            ]
+        ]
+    },
+    {
+        "id": "716facfb90974ef6",
+        "type": "function",
+        "z": "15c20ee25c8f2ad8",
+        "name": "function 8",
+        "func": "msg.payload = msg.payload['uplink_message']['decoded_payload']['humidity'];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 240,
+        "wires": [
+            [
+                "af48ae8c64c7e7c3"
+            ]
+        ]
+    },
+    {
+        "id": "af48ae8c64c7e7c3",
+        "type": "debug",
+        "z": "15c20ee25c8f2ad8",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "72a9de6b6c73d998",
+        "type": "mqtt in",
+        "z": "15c20ee25c8f2ad8",
+        "name": "dbase",
+        "topic": "#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "c52b26a844a812e8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 90,
+        "y": 540,
+        "wires": [
+            [
+                "eefc9c29a2e277ba"
+            ]
+        ]
+    },
+    {
+        "id": "eefc9c29a2e277ba",
+        "type": "function",
+        "z": "15c20ee25c8f2ad8",
+        "name": "function 9",
+        "func": "msg.payload1 = msg.payload['uplink_message']['decoded_payload']['temperature'];\nmsg.payload2 = msg.payload['uplink_message']['decoded_payload']['humidity'];\nmsg.payload3 = msg.payload['uplink_message']['decoded_payload']['nilai'];\n\nmsg.topic = \"INSERT INTO data(suhu, lembab, cahaya) VALUES ('\"+msg.payload1+\"', '\"+msg.payload2+\"', '\"+msg.payload3+\"')\";\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 540,
+        "wires": [
+            [
+                "d37a9d364610eab8",
+                "44671f133c3e6beb"
+            ]
+        ]
+    },
+    {
+        "id": "d37a9d364610eab8",
+        "type": "mysql",
+        "z": "15c20ee25c8f2ad8",
+        "mydb": "233b2d7ed24182d2",
+        "name": "dbasenode1",
+        "x": 630,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8550f6e0d489c629",
+        "type": "mqtt in",
+        "z": "15c20ee25c8f2ad8",
+        "name": "HUMIDITY",
+        "topic": "#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "c52b26a844a812e8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 100,
+        "y": 240,
+        "wires": [
+            [
+                "716facfb90974ef6"
+            ]
+        ]
+    },
+    {
+        "id": "e3aa53aa846fb788",
+        "type": "function",
+        "z": "15c20ee25c8f2ad8",
+        "name": "function 10",
+        "func": "msg.payload = msg.payload['uplink_message']['decoded_payload']['temperature'];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 140,
+        "wires": [
+            [
+                "a9cdf8c4bfb6ae9a"
+            ]
+        ]
+    },
+    {
+        "id": "44671f133c3e6beb",
+        "type": "debug",
+        "z": "15c20ee25c8f2ad8",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "a9cdf8c4bfb6ae9a",
+        "type": "debug",
+        "z": "15c20ee25c8f2ad8",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "fc3b6a7bd92844d0",
+        "type": "mqtt in",
+        "z": "15c20ee25c8f2ad8",
+        "name": "cahaya",
+        "topic": "#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "c52b26a844a812e8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 90,
+        "y": 400,
+        "wires": [
+            [
+                "9ca169d5d302b081"
+            ]
+        ]
+    },
+    {
+        "id": "9ca169d5d302b081",
+        "type": "function",
+        "z": "15c20ee25c8f2ad8",
+        "name": "function 11",
+        "func": "msg.payload = msg.payload['uplink_message']['decoded_payload']['nilai'];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 400,
+        "wires": [
+            [
+                "9091fa7779b4583f"
+            ]
+        ]
+    },
+    {
+        "id": "9091fa7779b4583f",
+        "type": "debug",
+        "z": "15c20ee25c8f2ad8",
+        "name": "debug 10",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "c52b26a844a812e8",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "au1.cloud.thethings.network",
+        "port": "8883",
+        "tls": "",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "233b2d7ed24182d2",
+        "type": "MySQLdatabase",
+        "name": "node1",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "pbl3",
+        "tz": "",
+        "charset": "UTF8"
+    }
+]
